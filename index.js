@@ -15,7 +15,7 @@ var exec = require('child_process').exec;
 
 function checkInv(cb) {
     var availability = [];
-    queryStores(['New York'], ['New York', 'Elmhurst'], function(err, storeByCode) {
+    queryStores(['New York'], ['New York', 'Elmhurst', 'Brooklyn'], function(err, storeByCode) {
 
         request(INV_URL, function (error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -69,7 +69,7 @@ setInterval(checkInv, 10000, function(err, availability) {
     if (availability.length > 0) {
         console.log(availability);
         console.log('https://reserve.cdn-apple.com/US/en_US/reserve/iPhone/availability?channel=1&sourceID=email&rv=0&path=&iPP=U&appleCare=Y');
-        exec('say Pay attention. Found iPhone. Found iPhone. Found iPhone. Found iPhone.');
+        exec('say New incoming message. New incoming message. New incoming message.');
     } else {
         console.log('tried on ' + new Date());
     }
