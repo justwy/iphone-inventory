@@ -11,6 +11,7 @@ const DESIRED_MODELS = [
 
 var request = require('request');
 var lodash = require('lodash');
+var util = require('util');
 var exec = require('child_process').exec;
 
 function checkInv(cb) {
@@ -69,7 +70,10 @@ setInterval(checkInv, 10000, function(err, availability) {
     if (availability.length > 0) {
         console.log(availability);
         console.log('https://reserve.cdn-apple.com/US/en_US/reserve/iPhone/availability?channel=1&sourceID=email&rv=0&path=&iPP=U&appleCare=Y');
-        exec('say New incoming message. New incoming message. New incoming message.');
+        var stores = lodash.map(availability, function(each) {
+            return each.storeName
+        }).join(', ')
+        exec(util.format('say new stocks in %s.', stores));
     } else {
         console.log('tried on ' + new Date());
     }
