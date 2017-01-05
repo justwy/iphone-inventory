@@ -45,7 +45,7 @@ setInterval(checkInv, 10000, function(err, storesWithInv) {
                 return;
             }
         } else {
-            console.log(util.format('new store found [%s]', stores);
+            console.log(util.format('new store found [%s]', stores));
             repeatCount = 0;
             lastStores = stores;
         }
