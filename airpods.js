@@ -5,6 +5,9 @@ var lodash = require('lodash');
 var util = require('util');
 var exec = require('child_process').exec;
 
+var lastStores = '';
+var repeatCount = 0;
+
 
 const AIRPODS_PROD_CODE = "MMEF2AM/A";
 
@@ -31,9 +34,22 @@ setInterval(checkInv, 10000, function(err, storesWithInv) {
     if (storesWithInv.length > 0) {
         console.log('http://www.apple.com/shop/product/MMEF2AM/A/airpods');
         var stores = lodash.map(storesWithInv, function(each) {
-            return each.storeName
-        }).join(', ')
-        console.log(stores);
+            return each.storeName;
+        }).join(', ');
+
+        if (stores === lastStores) {
+            repeatCount++;
+            console.log('repeat ' + repeatCount + ' times.');
+            if (repeatCount >= 10) {
+                console.log('repeat more than 10 times. no notification.')
+                return;
+            }
+        } else {
+            console.log(util.format('new store found [%s]', stores);
+            repeatCount = 0;
+            lastStores = stores;
+        }
+
         var notificationCmd = 'osascript -e \'display notification "%s" sound name "Ping" with title "Airpods"\''
         exec(util.format(notificationCmd, stores));
     } else {
