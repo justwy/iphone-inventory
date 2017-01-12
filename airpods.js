@@ -10,6 +10,7 @@ var repeatCount = 0;
 
 
 const AIRPODS_PROD_CODE = "MMEF2AM/A";
+const REPEAT_NOTIFICATION = 5;
 
 
 function checkInv(cb) {
@@ -40,7 +41,7 @@ setInterval(checkInv, 10000, function(err, storesWithInv) {
         if (stores === lastStores) {
             repeatCount++;
             console.log('repeat ' + repeatCount + ' times.');
-            if (repeatCount >= 10) {
+            if (repeatCount >= REPEAT_NOTIFICATION) {
                 console.log('repeat more than 10 times. no notification.')
                 return;
             }
